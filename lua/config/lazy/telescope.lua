@@ -17,11 +17,13 @@ return {
                   "--line-number",
                   "--column",
                   "--smart-case",
-                  "--ignore",       -- Respect .gitignore and other ignore files
+                  "--ignore",
                   "--glob=**/**",
                   "--glob=vendor/**",  -- Also include vendor directory
                   "--glob=!**/node_modules/**",
                   "--glob=!dev/**",
+                  "--glob=!var/**",
+                  "--glob=!pub/**",
                   "--glob=!generated/**",
                 }
             }

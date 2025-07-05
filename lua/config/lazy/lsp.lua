@@ -53,6 +53,19 @@ return {
                     vim.g.zig_fmt_autosave = 0
 
                 end,
+
+                clangd = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.clangd.setup {
+                         cmd = {
+                            "clangd",
+                            "--background-index",
+                            "--enable-config",
+                            "--query-driver=/usr/bin/g++"
+                        }
+                    }
+                end,
+
                 ["lua_ls"] = function()
                     local lspconfig = require("lspconfig")
                     lspconfig.lua_ls.setup {
@@ -89,11 +102,13 @@ return {
                 { name = 'luasnip' }, -- For luasnip users.
             }, {
                 { name = 'buffer' },
-            })
+            }),
+            completion = {
+                autocomplete = false,
+            },
         })
 
         vim.diagnostic.config({
-            -- update_in_insert = true,
             float = {
                 focusable = false,
                 style = "minimal",

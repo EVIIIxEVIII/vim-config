@@ -11,20 +11,21 @@ return {
             defaults = {
                 vimgrep_arguments = {
                   "rg",
-                  "--color=never",
-                  "--no-heading",
-                  "--with-filename",
-                  "--line-number",
-                  "--column",
+                  "--vimgrep",
                   "--smart-case",
-                  "--ignore",
-                  "--glob=**/**",
-                  "--glob=vendor/**",  -- Also include vendor directory
-                  "--glob=!**/node_modules/**",
-                  "--glob=!dev/**",
-                  "--glob=!var/**",
-                  "--glob=!pub/**",
-                  "--glob=!generated/**",
+                  "--hidden",
+                  "--no-ignore-vcs",
+                  "--max-columns", "300",
+                  "--threads", "16",
+                  "--no-config",
+                  "--type-add", "code:*.{php,js,ts,vue,css,scss,html,xml,phtml}",
+                  "--type", "code",
+
+                  "--glob", "!**/dev/**",
+                  "--glob", "!**/node_modules/**",
+                  "--glob", "!**/var/**",
+                  "--glob", "!**/pub/static/**",
+                  "--glob", "!**/generated/**",
                 }
             }
         })

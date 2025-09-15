@@ -11,7 +11,14 @@ return {
       local dap = require "dap"
       local ui = require "dapui"
 
-      require("dapui").setup()
+      require("dapui").setup({
+          layouts = {
+            { position = "left", size = 40, elements = { "scopes", "watches", "stacks", "breakpoints" } },
+            { position = "bottom", size = 10, elements = { "repl", "console" } },
+          },
+          floating = { border = "rounded" },
+      })
+
       require("nvim-dap-virtual-text").setup()
 
       dap.adapters.cppdbg = {
@@ -62,6 +69,22 @@ return {
         require("dap").terminate()
         require("dapui").close()
       end, { desc = "Stop debugger" })
+
+      vim.keymap.set({ "n", "v" }, "<leader>e", function()
+        require("dapui").eval(nil, { enter = true })
+      end, { desc = "DAP eval" })
+
+      vim.keymap.set("n", "<leader>r", function()
+        require("dap").repl.toggle()
+      end, { desc = "DAP REPL" })
+
+      vim.keymap.set("n", "<leader>dv", function()
+        require("nvim-dap-virtual-text").toggle()
+      end, { desc = "Toggle DAP virtual text" })
+
+      vim.keymap.set("n", "<leader>w", function()
+        require("dapui").elements.watches.add()
+      end, { desc = "Add watch" })
 
       dap.listeners.before.attach.dapui_config = function()
         ui.open()

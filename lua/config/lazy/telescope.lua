@@ -18,8 +18,6 @@ return {
                   "--max-columns", "300",
                   "--threads", "16",
                   "--no-config",
-                  "--type-add", "code:*.{php,js,ts,vue,css,scss,html,xml,phtml}",
-                  "--type", "code",
 
                   "--glob", "!**/dev/**",
                   "--glob", "!**/node_modules/**",

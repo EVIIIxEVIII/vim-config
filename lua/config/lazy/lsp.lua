@@ -24,6 +24,7 @@ return {
 
         require("fidget").setup({})
         require("mason").setup()
+
         require("mason-lspconfig").setup({
             ensure_installed = {
                 "lua_ls",
@@ -31,16 +32,13 @@ return {
                 "gopls",
             },
             handlers = {
-                function(server_name) -- default handler (optional)
-                    require("lspconfig")[server_name].setup {
-                        capabilities = capabilities
-                    }
+                function(server_name)
+                    vim.lsp.enable(server_name)
                 end,
 
                 zls = function()
-                    local lspconfig = require("lspconfig")
-                    lspconfig.zls.setup({
-                        root_dir = lspconfig.util.root_pattern(".git", "build.zig", "zls.json"),
+                    vim.lsp.config.zls = {
+                        root_dir = vim.lsp.util.root_pattern(".git", "build.zig", "zls.json"),
                         settings = {
                             zls = {
                                 enable_inlay_hints = true,
@@ -48,15 +46,14 @@ return {
                                 warn_style = true,
                             },
                         },
-                    })
+                    }
                     vim.g.zig_fmt_parse_errors = 0
                     vim.g.zig_fmt_autosave = 0
-
+                    vim.lsp.enable("zls")
                 end,
 
                 clangd = function()
-                    local lspconfig = require("lspconfig")
-                    lspconfig.clangd.setup {
+                    vim.lsp.config['clangd'] = {
                          cmd = {
                             "clangd",
                             "--background-index",
@@ -64,11 +61,11 @@ return {
                             "--query-driver=/usr/bin/g++"
                         }
                     }
+                    vim.lsp.enable("clangd")
                 end,
 
-                ["lua_ls"] = function()
-                    local lspconfig = require("lspconfig")
-                    lspconfig.lua_ls.setup {
+                lua_ls = function()
+                    vim.lsp.config['lua_ls'] = {
                         capabilities = capabilities,
                         settings = {
                             Lua = {
@@ -79,6 +76,7 @@ return {
                             }
                         }
                     }
+                    vim.lsp.enable("lua_ls")
                 end,
             }
         })
